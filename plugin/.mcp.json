@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ferret-search-orchestrator": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/../.venv/bin/python",
+      "args": ["-m", "search_orchestrator"],
+      "cwd": "${CLAUDE_PLUGIN_ROOT}/.."
+    }
+  }
+}
