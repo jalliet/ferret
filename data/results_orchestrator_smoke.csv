@@ -14,6 +14,6 @@ cache,offset_beyond_bounds,PASS,"returns empty, 0 remaining"
 cache,lru_eviction,PASS,oldest evicted at max_queries=2
 cache,case_insensitive,PASS,normalized keys
 cache,unknown_query,PASS,returns empty gracefully
-pipeline,search_and_scrape,PASS,"83 cached from 10 sources, 0 failed (3.7s)"
-pipeline,get_more,PASS,73 remaining (0.000s — cached)
+pipeline,search_and_scrape,PASS,"64 cached from 10 sources, 0 failed (3.6s)"
+pipeline,get_more,PASS,54 remaining (0.000s — cached)
 pipeline,get_more_unknown,PASS,returns error

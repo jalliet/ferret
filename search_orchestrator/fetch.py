@@ -1,8 +1,31 @@
+import ipaddress
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import urlparse
+
 from scrapling import Fetcher, StealthyFetcher
 from bs4 import BeautifulSoup
 
 _fetcher = Fetcher()
+_ALLOWED_SCHEMES = {"http", "https"}
+_BLOCKED_HOSTS = {"169.254.169.254", "metadata.google.internal", "localhost"}
+
+
+def _validate_url(url: str) -> None:
+    """Reject non-HTTP schemes, private IPs, and cloud metadata endpoints."""
+    parsed = urlparse(url)
+    if parsed.scheme not in _ALLOWED_SCHEMES:
+        raise ValueError(f"Blocked scheme: {parsed.scheme}")
+    hostname = parsed.hostname or ""
+    if hostname in _BLOCKED_HOSTS:
+        raise ValueError(f"Blocked metadata host: {hostname}")
+    try:
+        ip = ipaddress.ip_address(hostname)
+        if ip.is_private or ip.is_loopback or ip.is_link_local:
+            raise ValueError(f"Blocked private/internal IP: {hostname}")
+    except ValueError as e:
+        if "Blocked" in str(e):
+            raise
+        # Not an IP address — legitimate hostname, allow it
 
 def _extract_text(html: str) -> str:
     """Extract clean text from HTML using BeautifulSoup."""
@@ -17,6 +40,7 @@ def _extract_text(html: str) -> str:
 def _fetch_one(url: str) -> dict:
     """Fetch a single URL with Scrapling Fetcher (HTTP-only)."""
     try:
+        _validate_url(url)
         resp = _fetcher.get(url)
         if resp.status >= 400:
             return {"url": url, "status": resp.status, "text": "", "error": f"HTTP {resp.status}"}
@@ -43,6 +67,7 @@ def fetch_parallel(urls: list[str], max_workers: int = 5) -> list[dict]:
 def stealth_fetch_one(url: str) -> dict:
     """Fetch a single URL with StealthyFetcher (Camoufox)."""
     try:
+        _validate_url(url)
         fetcher = StealthyFetcher()
         resp = fetcher.get(url)
         text = _extract_text(resp.html_content)
