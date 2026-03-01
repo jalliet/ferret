@@ -1,0 +1,11 @@
+[project]
+name = "ferret"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests that take >5s (deselect with '-m \"not slow\"')",
+    "network: marks tests that require network access (deselect with '-m \"not network\"')",
+]
