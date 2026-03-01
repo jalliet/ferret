@@ -120,7 +120,7 @@ overlap_count = len(last_words & first_words)
 assert overlap_count >= 10, f"Expected >=10 overlapping words, got {overlap_count}"
 ok("chunker", "overlap", f"{overlap_count} words shared between chunks 0 and 1")
 
-# ── TF-IDF scorer ─────────────────────────────────────────────────────
+# ── Cross-encoder scorer ──────────────────────────────────────────────
 print("\nTEST: scorer")
 from search_orchestrator.scorer import score_chunks
 
