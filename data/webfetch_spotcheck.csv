@@ -1,0 +1,11 @@
+id,url,domain,httpx_quality,webfetch_result,notes
+1,https://www.reddit.com/r/MachineLearning/comments/1h3g9kz/,reddit.com,blocked,FAILED,"web_fetch: 'unable to fetch from www.reddit.com' - explicit domain block"
+7,https://medium.com/@kozyrkov/what-is-ai-really-about-3a2e3b5f4d7e,medium.com,blocked,FAILED,"web_fetch: 403 - matches httpx"
+10,https://www.bloomberg.com/news/articles/2025-05-15/,bloomberg.com,blocked,FAILED,"web_fetch: 403 - matches httpx"
+21,https://x.com/AnthropicAI/status/1879935424754135407,x.com,blocked,BLOCKED,"web_fetch: got page but JS-rendered block page only"
+24,https://arxiv.org/abs/2401.04088,arxiv.org,content_retrieved,SUCCESS,"web_fetch: got full abstract and metadata - matches httpx"
+28,https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview,docs.anthropic.com,blocked,SUCCESS,"web_fetch: followed 301 redirect to platform.claude.com and got full content. httpx got JS shell."
+33,https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct,huggingface.co,blocked,SUCCESS,"web_fetch: got full model card. httpx got JS-rendered shell."
+38,https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture),wikipedia.org,content_retrieved,FAILED,"web_fetch: 403. httpx got 403 too but script classified content_retrieved (>2000 chars error page)."
+4,https://stackoverflow.com/questions/44131164/,stackoverflow.com,content_retrieved,FAILED,"web_fetch: 'unable to fetch from stackoverflow.com' - explicit domain block. httpx got a 404 page."
+48,https://news.ycombinator.com/item?id=39561356,news.ycombinator.com,content_retrieved,SUCCESS,"web_fetch: got full thread - matches httpx"
