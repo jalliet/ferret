@@ -10,6 +10,31 @@ import time
 from pathlib import Path
 
 import httpx
+from bs4 import BeautifulSoup
+
+from content_quality import assess_content
+
+# Tags that never contain user-visible article content
+NON_CONTENT_TAGS = [
+    # Code and metadata
+    "script", "style", "noscript", "template",
+    # Navigation and chrome
+    "nav", "header", "footer",
+    # Media (not text)
+    "svg", "canvas", "video", "audio",
+    # Forms and interactive elements
+    "form", "select", "option",
+    # Hidden content
+    "iframe",
+]
+
+
+def extract_text(html: str) -> str:
+    """Extract visible text from HTML, stripping non-content elements."""
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup(NON_CONTENT_TAGS):
+        tag.decompose()
+    return soup.get_text(separator=" ", strip=True)
 
 INPUT_CSV = Path(__file__).parent / "test-urls.csv"
 OUTPUT_CSV = Path(__file__).parent / "results_baseline.csv"
@@ -24,39 +49,6 @@ HEADERS = {
 
 TIMEOUT = 30.0
 MAX_CONCURRENT = 5
-
-
-def assess_content(text: str, url: str) -> str:
-    """Quick heuristic: did we get real content or a block/error page?"""
-    if not text or len(text) < 100:
-        return "empty"
-    lower = text.lower()
-    # Common block indicators
-    block_signals = [
-        "access denied",
-        "403 forbidden",
-        "please enable javascript",
-        "checking your browser",
-        "just a moment",
-        "attention required",
-        "cloudflare",
-        "captcha",
-        "robot",
-        "blocked",
-        "rate limit",
-        "too many requests",
-        "sign in to",
-        "log in to continue",
-        "create an account",
-    ]
-    block_count = sum(1 for s in block_signals if s in lower)
-    if block_count >= 2:
-        return "blocked"
-    if len(text) < 500 and block_count >= 1:
-        return "likely_blocked"
-    if len(text) > 2000:
-        return "content_retrieved"
-    return "partial"
 
 
 async def fetch_url(client: httpx.AsyncClient, url_row: dict, semaphore: asyncio.Semaphore) -> dict:
@@ -81,13 +73,18 @@ async def fetch_url(client: httpx.AsyncClient, url_row: dict, semaphore: asyncio
             elapsed = (time.monotonic() - start) * 1000
             result["status_code"] = resp.status_code
             result["response_time_ms"] = round(elapsed)
-            text = resp.text
+            raw_html = resp.text
+            text = extract_text(raw_html)
             result["content_length"] = len(text)
-            result["content_quality"] = assess_content(text, url)
+            result["content_quality"] = assess_content(
+                text,
+                status_code=resp.status_code,
+                html_length=len(raw_html),
+            )
         except httpx.TimeoutException:
             result["response_time_ms"] = round((time.monotonic() - start) * 1000)
             result["error"] = "timeout"
-            result["content_quality"] = "timeout"
+            result["content_quality"] = "error"
         except Exception as e:
             result["response_time_ms"] = round((time.monotonic() - start) * 1000)
             result["error"] = str(e)[:200]
@@ -140,7 +137,7 @@ async def main():
         if cat not in categories:
             categories[cat] = {"total": 0, "success": 0}
         categories[cat]["total"] += 1
-        if r["content_quality"] in ("content_retrieved", "partial"):
+        if r["content_quality"] in ("success", "partial"):
             categories[cat]["success"] += 1
 
     for cat, counts in sorted(categories.items()):
