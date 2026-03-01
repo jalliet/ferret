@@ -1,0 +1,51 @@
+id,url,domain,category,auth_required,description
+1,https://www.reddit.com/r/MachineLearning/comments/1h3g9kz/d_what_ml_papers_are_you_reading_this_week/,reddit.com,social_ai_blocked,no,Reddit discussion thread - blocks AI crawlers but public content
+2,https://www.reddit.com/r/LocalLLaMA/top/?t=month,reddit.com,social_ai_blocked,no,Reddit subreddit listing - public but blocks bots
+3,https://www.reddit.com/r/artificial/comments/1i2x5m7/,reddit.com,social_ai_blocked,no,Reddit AI discussion post
+4,https://stackoverflow.com/questions/44131164/how-to-correctly-use-async-await-with-axios,stackoverflow.com,social_ai_blocked,no,StackOverflow question - blocked AI crawlers since 2024
+5,https://stackoverflow.com/questions/tagged/python?tab=newest,stackoverflow.com,social_ai_blocked,no,StackOverflow tag listing page
+6,https://stackoverflow.com/questions/41063947/how-to-use-aiohttp-with-proxy,stackoverflow.com,social_ai_blocked,no,StackOverflow technical Q&A
+7,https://medium.com/@kozyrkov/what-is-ai-really-about-3a2e3b5f4d7e,medium.com,paywall_bot_detection,partial,Medium article - some paywalled some free but bot-detected
+8,https://towardsdatascience.com/understanding-transformers-in-depth-b6a3e2d0c8e2,medium.com,paywall_bot_detection,partial,Medium/TDS article - paywall + bot detection
+9,https://medium.com/the-generator/the-complete-guide-to-building-ai-agents-2025-edition,medium.com,paywall_bot_detection,partial,Medium AI guide
+10,https://www.bloomberg.com/news/articles/2025-05-15/ai-spending-hits-record-as-companies-race-to-deploy,bloomberg.com,hard_paywall,yes,Bloomberg news - hard paywall
+11,https://www.bloomberg.com/technology,bloomberg.com,hard_paywall,yes,Bloomberg tech section landing
+12,https://www.nytimes.com/2025/04/10/technology/ai-regulation-europe.html,nytimes.com,hard_paywall,yes,NYT article - paywall + AI crawler block
+13,https://www.nytimes.com/2025/03/20/science/brain-computer-interface.html,nytimes.com,hard_paywall,yes,NYT science article
+14,https://www.wsj.com/tech/ai/anthropic-claude-business-strategy,wsj.com,hard_paywall,yes,WSJ article - paywall + Cloudflare
+15,https://www.wsj.com/economy/jobs/remote-work-trends-2025,wsj.com,hard_paywall,yes,WSJ economy article
+16,https://www.linkedin.com/pulse/future-ai-engineering-2025-trends,linkedin.com,auth_gated,yes,LinkedIn Pulse article - login wall
+17,https://www.linkedin.com/in/yann-lecun/,linkedin.com,auth_gated,yes,LinkedIn profile - auth required
+18,https://www.instagram.com/p/CzX5mN2rKjL/,instagram.com,auth_gated,yes,Instagram post - auth required
+19,https://www.pinterest.com/search/pins/?q=system%20architecture%20diagram,pinterest.com,auth_gated,yes,Pinterest search - login wall
+20,https://www.glassdoor.com/Reviews/Anthropic-Reviews-E5765328.htm,glassdoor.com,auth_gated,yes,Glassdoor company reviews - login + Cloudflare
+21,https://x.com/AnthropicAI/status/1879935424754135407,x.com,cloudflare_protected,partial,X/Twitter post - Cloudflare + partial auth gating
+22,https://x.com/kaboroevich/status/1880123456789012345,x.com,cloudflare_protected,partial,X/Twitter post - Cloudflare protection
+23,https://www.quora.com/What-is-the-best-way-to-learn-machine-learning,quora.com,cloudflare_protected,partial,Quora question - login wall + bot detection
+24,https://arxiv.org/abs/2401.04088,arxiv.org,rate_limited,no,arXiv paper abstract - rate limiting on automated access
+25,https://arxiv.org/abs/2310.06825,arxiv.org,rate_limited,no,arXiv paper (Mistral 7B)
+26,https://arxiv.org/abs/2403.05530,arxiv.org,rate_limited,no,arXiv paper (Claude 3)
+27,https://arxiv.org/abs/2312.11805,arxiv.org,rate_limited,no,arXiv paper (Gemini)
+28,https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview,docs.anthropic.com,cloudflare_protected,no,Anthropic docs - Cloudflare protected
+29,https://docs.stripe.com/api/charges/create,docs.stripe.com,cloudflare_protected,no,Stripe API docs - Cloudflare
+30,https://docs.vercel.com/functions/serverless-functions,docs.vercel.com,cloudflare_protected,no,Vercel docs - protected documentation
+31,https://platform.openai.com/docs/api-reference/chat/create,platform.openai.com,cloudflare_protected,no,OpenAI API reference - Cloudflare
+32,https://developer.nvidia.com/cuda-toolkit-archive,developer.nvidia.com,cloudflare_protected,no,NVIDIA developer docs - bot detection
+33,https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct,huggingface.co,js_rendered,no,HuggingFace model card - JS-heavy rendering
+34,https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard,huggingface.co,js_rendered,no,HuggingFace leaderboard - JS-rendered dynamic content
+35,https://paperswithcode.com/sota/image-classification-on-imagenet,paperswithcode.com,js_rendered,no,Papers With Code SOTA table - JS rendered
+36,https://www.kaggle.com/datasets/Cornell-University/arxiv,kaggle.com,js_rendered,no,Kaggle dataset page - JS heavy + some gating
+37,https://github.com/anthropics/anthropic-cookbook/blob/main/misc/prompt_caching.ipynb,github.com,baseline_accessible,no,GitHub notebook - should be accessible (baseline control)
+38,https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture),wikipedia.org,baseline_accessible,no,Wikipedia article - should always work (baseline control)
+39,https://docs.python.org/3/library/asyncio.html,docs.python.org,baseline_accessible,no,Python docs - should always work (baseline control)
+40,https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html,pytorch.org,baseline_accessible,no,PyTorch docs - should be accessible
+41,https://www.nature.com/articles/s41586-024-07487-w,nature.com,paywall_bot_detection,partial,Nature article - partial paywall + bot detection
+42,https://www.sciencedirect.com/science/article/pii/S0004370224000249,sciencedirect.com,paywall_bot_detection,yes,ScienceDirect article - Elsevier paywall
+43,https://ieeexplore.ieee.org/document/10447835,ieeexplore.ieee.org,paywall_bot_detection,yes,IEEE paper - paywall + bot detection
+44,https://www.ft.com/content/ai-technology-investment-2025,ft.com,hard_paywall,yes,Financial Times - hard paywall + Cloudflare
+45,https://techcrunch.com/2025/05/01/ai-startup-funding-trends/,techcrunch.com,cloudflare_protected,no,TechCrunch article - Cloudflare but usually accessible
+46,https://arstechnica.com/ai/2025/04/latest-developments-in-llm-reasoning/,arstechnica.com,cloudflare_protected,no,Ars Technica - Cloudflare protected
+47,https://www.wired.com/story/ai-agents-2025-reality-check/,wired.com,paywall_bot_detection,partial,Wired article - partial paywall + Cloudflare
+48,https://news.ycombinator.com/item?id=39561356,news.ycombinator.com,baseline_accessible,no,Hacker News thread - should be accessible (baseline control)
+49,https://openreview.net/forum?id=nZeVKeeFYf9,openreview.net,js_rendered,no,OpenReview paper - JS-rendered content
+50,https://www.semanticscholar.org/paper/Attention-Is-All-You-Need-Vaswani-Shazeer/204e3073870fae3d05bcbc2f6a8e263d9b72e776,semanticscholar.org,js_rendered,no,Semantic Scholar - JS-rendered paper page
