@@ -31,7 +31,7 @@ def _validate_url(url: str) -> None:
             raise
 
 
-def _extract_text(html: str) -> str:
+def extract_text(html: str) -> str:
     """Extract clean text from HTML, stripping boilerplate tags."""
     soup = BeautifulSoup(html, "html.parser")
     for tag in soup(["script", "style", "nav", "footer", "header"]):
@@ -48,7 +48,7 @@ def _do_fetch(url: str, fetcher) -> FetchResult:
         resp = fetcher.get(url)
         if resp.status >= 400:
             return FetchResult(url=url, status=resp.status, text="", error=f"HTTP {resp.status}")
-        text = _extract_text(resp.html_content)
+        text = extract_text(resp.html_content)
         if len(text) < _MIN_TEXT_LEN:
             return FetchResult(url=url, status=resp.status, text="", error="empty_content")
         return FetchResult(url=url, status=resp.status, text=text, error=None)

@@ -55,6 +55,7 @@ def test_chunk_text_all_words_preserved():
 # ── Overlap ────────────────────────────────────────────────────────────────
 
 def test_chunk_text_overlap_words_appear_in_consecutive_chunks():
+    """Exact overlap invariant: current impl slices word lists directly."""
     text = _make_long_text(800)
     overlap = 40
     chunks = chunk_text(text, chunk_size=200, overlap=overlap)

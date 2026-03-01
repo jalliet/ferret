@@ -31,7 +31,7 @@ ok("search", "num_results_limit", f"requested 5, got {len(r5)}")
 
 # ── Parallel fetch ────────────────────────────────────────────────────
 print("\nTEST: fetch")
-from search_orchestrator.fetch import fetch_parallel, _extract_text
+from search_orchestrator.fetch import fetch_parallel, extract_text
 
 # Test text extraction on realistic HTML with boilerplate
 realistic_html = """
@@ -53,7 +53,7 @@ These tools handle malformed markup gracefully and provide CSS selector support.
 <footer><p>Copyright 2025. All rights reserved.</p><nav>Footer nav links</nav></footer>
 </body></html>
 """
-text = _extract_text(realistic_html)
+text = extract_text(realistic_html)
 # Content should survive
 assert "Web Scraping Best Practices" in text, "Article heading should survive"
 assert "respect robots.txt" in text, "Article content should survive"
