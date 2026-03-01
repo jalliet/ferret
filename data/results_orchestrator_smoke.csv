@@ -1,0 +1,19 @@
+module,test,result,detail
+search,ddg_search,PASS,"10 results, first: Python Web Scraping Tutorial - GeeksforGeeks"
+search,num_results_limit,PASS,"requested 5, got 5"
+fetch,extract_text_realistic,PASS,"content preserved, boilerplate stripped"
+fetch,fetch_parallel_mixed,PASS,"1 success, 2 failures handled gracefully"
+chunker,empty_input,PASS,returns []
+chunker,short_text,PASS,1 chunk
+chunker,long_text,PASS,"7 chunks, word counts: [496, 494, 497, 493, 494, 494, 432]"
+chunker,overlap,PASS,28 words shared between chunks 0 and 1
+scorer,relevance_ranking,PASS,"[('relevant', 0.5232), ('also-relevant', 0.4729), ('irrelevant', 0.0)]"
+scorer,empty_input,PASS,returns []
+cache,put_get,PASS,"2 returned, 1 remaining"
+cache,offset_beyond_bounds,PASS,"returns empty, 0 remaining"
+cache,lru_eviction,PASS,oldest evicted at max_queries=2
+cache,case_insensitive,PASS,normalized keys
+cache,unknown_query,PASS,returns empty gracefully
+pipeline,search_and_scrape,PASS,"83 cached from 10 sources, 0 failed (2.4s)"
+pipeline,get_more,PASS,73 remaining (0.000s — cached)
+pipeline,get_more_unknown,PASS,returns error
