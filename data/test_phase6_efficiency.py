@@ -13,6 +13,7 @@ from search_orchestrator.search import search_ddg
 from search_orchestrator.fetch import fetch_parallel
 from search_orchestrator.chunker import chunk_text
 from search_orchestrator.scorer import score_chunks
+from search_orchestrator.types import ScoredChunk
 
 QUERIES = [
     "how does transformer attention mechanism work in large language models",
@@ -42,22 +43,22 @@ for i, query in enumerate(QUERIES, 1):
 
     # Search + fetch
     search_results = search_ddg(query, num_results=10)
-    urls = [r["url"] for r in search_results]
+    urls = [r.url for r in search_results]
     fetch_results = fetch_parallel(urls)
-    successful = [r for r in fetch_results if r["error"] is None]
+    successful = [r for r in fetch_results if r.ok]
 
     # Raw text: everything fetched (what you'd get dumping pages into context)
-    raw_texts = [r["text"] for r in successful]
+    raw_texts = [r.text for r in successful]
     raw_tokens = sum(estimate_tokens(t) for t in raw_texts)
 
     # Chunk all text
-    all_chunks = []
+    all_chunks: list[ScoredChunk] = []
     for result in successful:
-        chunks = chunk_text(result["text"])
+        chunks = chunk_text(result.text)
         for j, text in enumerate(chunks):
-            all_chunks.append({"text": text, "source_url": result["url"], "chunk_index": j})
+            all_chunks.append(ScoredChunk(text=text, source_url=result.url, chunk_index=j))
 
-    chunked_tokens = sum(estimate_tokens(c["text"]) for c in all_chunks)
+    chunked_tokens = sum(estimate_tokens(c.text) for c in all_chunks)
 
     # Score and take top-k
     t0 = time.time()
@@ -65,12 +66,12 @@ for i, query in enumerate(QUERIES, 1):
     score_time = time.time() - t0
 
     top_k_chunks = scored[:TOP_K]
-    filtered_tokens = sum(estimate_tokens(c["text"]) for c in top_k_chunks)
+    filtered_tokens = sum(estimate_tokens(c.text) for c in top_k_chunks)
 
     # Metrics
     reduction = raw_tokens / filtered_tokens if filtered_tokens > 0 else 0
-    top_score = top_k_chunks[0]["score"] if top_k_chunks else 0
-    bottom_score = top_k_chunks[-1]["score"] if top_k_chunks else 0
+    top_score = top_k_chunks[0].score if top_k_chunks else 0
+    bottom_score = top_k_chunks[-1].score if top_k_chunks else 0
 
     verdict = "PASS" if reduction >= 5 else "MARGINAL" if reduction >= 3 else "FAIL"
 
