@@ -1,0 +1,41 @@
+query,http_status,html_chars,result_rank,title,url,snippet,verdict
+python web scraping best practices 2025,200,30258,1,Master Python Scraping: A Best Practices Tutorial in 2025,https://thunderbit.com/blog/python-scraping-best-practices-tutorial,Build robust,PASS
+python web scraping best practices 2025,200,30258,2,Python Web Scraping Tutorial: Complete Guide (2025),https://generalistprogrammer.com/tutorials/python-web-scraping-tutorial-complete-guide,Master,PASS
+python web scraping best practices 2025,200,30258,3,Python Web Scraping: Full Tutorial With Examples (2025),https://www.scrapeless.com/en/blog/web-scraping-python,Master the basics of,PASS
+python web scraping best practices 2025,200,30258,4,Web Scraping in Python: A Practical Guide (2025) - TechBullion,https://techbullion.com/web-scraping-in-python-a-practical-guide-2025/,This guide covers modern,PASS
+python web scraping best practices 2025,200,30258,5,Python Web Scraping 2025: AI Tools & Best Practices | X-Byte,https://www.xbyte.io/python-web-scraping-best-practices-2025/,Master,PASS
+python web scraping best practices 2025,200,30258,6,Web Scraping with Python in 2025 - DEV Community,https://dev.to/datacollectionscraper/web-scraping-with-python-in-2025-4fd6,"In summary,",PASS
+python web scraping best practices 2025,200,30258,7,"Python Web Scraping Guide 2025: Tools, Tips & Techniques",https://www.serphouse.com/blog/web-scraping-in-python/,Learn how to approach,PASS
+python web scraping best practices 2025,200,30258,8,"Web Scraping Guide (2025): Techniques, Tools & Legal Practices ...",https://www.scrapebeast.com/blog/web-scraping-guide-2025,Complete,PASS
+python web scraping best practices 2025,200,30258,9,DOs and DON'Ts of Web Scraping 2026: Best Practices | Medium,https://medium.com/@datajournal/dos-and-donts-of-web-scraping-in-2025-e4f9b2a49431,Learn the essential DOs and DON'Ts of,PASS
+python web scraping best practices 2025,200,30258,10,Web Scraping in Python: A Comprehensive Guide - codegenes.net,https://www.codegenes.net/blog/what-is-web-scraping-in-python/,,PASS
+how to use scrapling library,200,29846,1,Web Scraping with Scrapling: Complete Guide & Tips | Medium,https://medium.com/@datajournal/web-scraping-with-scrapling-2025-tutorial-ae6c7fb1dd81,Learn,PASS
+how to use scrapling library,200,29846,2,Scrapling: A Complete Hands-On Guide - by Antonello Zanini,https://substack.thewebscraping.club/p/scrapling-hands-on-guide,,PASS
+how to use scrapling library,200,29846,3,How to Web Scrape with Scrapling in 2026: 6 easy steps,https://roundproxies.com/blog/scrapling/,,PASS
+how to use scrapling library,200,29846,4,Scrapling: FASTEST and Undetectable Free Web Scraping Library| FULLY ...,https://www.youtube.com/watch?v=TspVyrnrorI,"In this video, we explore",PASS
+how to use scrapling library,200,29846,5,Web Scraping with Scrapling: 2026 Tutorial - ZenRows,https://www.zenrows.com/blog/scrapling-web-scraper,You'll learn,PASS
+how to use scrapling library,200,29846,6,"Easy, effortless Web Scraping as it should be! - GitHub",https://github.com/RussPalms/Scrapling_dev,"Easy, effortless Web Scraping as it should be! Installation · Overview · Selection methods · Choosing a fetcher · Migrating from Beautifulsoup Dealing with failing web scrapers due to anti-bot protections or website changes? Meet",PASS
+how to use scrapling library,200,29846,7,Index - Scrapling,https://scrapling.readthedocs.io/,🚀,PASS
+how to use scrapling library,200,29846,8,Scrapling: Adaptive Python web scraping library that handles website ...,https://www.scrapingbee.com/blog/scrapling-adaptive-python-web-scraping/,,PASS
+how to use scrapling library,200,29846,9,D4Vinci/Scrapling | DeepWiki,https://deepwiki.com/D4Vinci/Scrapling/1-overview,This document provides a comprehensive introduction to,PASS
+how to use scrapling library,200,29846,10,scrapling · PyPI,https://pypi.org/project/scrapling/,,PASS
+claude code MCP server tutorial,200,31034,1,Connect Claude Code to tools via MCP - Claude Code Docs,https://code.claude.com/docs/en/mcp,,PASS
+claude code MCP server tutorial,200,31034,2,Build an MCP server - Model Context Protocol,https://modelcontextprotocol.io/docs/develop/build-server,Get started building your own,PASS
+claude code MCP server tutorial,200,31034,3,Conversational Development With Claude Code — Part 14: Installing MCP ...,https://dev.to/cristiansifuentes/conversational-development-with-claude-code-part-14-installing-mcp-servers-in-claude-code-3jg0,Conversational Development With,PASS
+claude code MCP server tutorial,200,31034,4,MCP Servers in Claude Code - truefoundry.com,https://www.truefoundry.com/blog/mcp-servers-in-claude-code,Learn what,PASS
+claude code MCP server tutorial,200,31034,5,Claude Code Tutorial #7 - MCP Servers - YouTube,https://www.youtube.com/watch?v=X7lgIa6guKg,"In this course, you'll learn how to harness the power of",PASS
+claude code MCP server tutorial,200,31034,6,Add MCP Servers to Claude Code - Setup & Configuration Guide - MCPcat,https://mcpcat.io/guides/adding-an-mcp-server-to-claude-code/,Learn how to add and configure,PASS
+claude code MCP server tutorial,200,31034,7,Claude Code MCP Server: Complete Setup Guide (2026),https://www.ksred.com/claude-code-as-an-mcp-server-an-interesting-capability-worth-understanding/,Step-by-step guide to running,PASS
+claude code MCP server tutorial,200,31034,8,[TIP] How to Add MCP Servers to Claude Code and Gemini CLI on Windows,https://elguerre.com/2026/02/28/tip-how-to-add-mcp-servers-to-claude-code-and-gemini-cli-on-windows/,"Introduction AI agents in the terminal, like",PASS
+claude code MCP server tutorial,200,31034,9,Claude Code MCP Servers - Complete Setup Guide,https://github.com/undeadpickle/claude-code-mcpinstall,,PASS
+claude code MCP server tutorial,200,31034,10,"Create a MCP Server for Claude Code — a practical, up-to-step guide",https://www.cometapi.com/create-a-mcp-server-for-claude-code/,Security note: Only add trusted,PASS
+site:github.com scrapling,202,13011,0,,,,FAIL
+ferret research orchestration,200,31275,1,"Care, management, and use of ferrets in biomedical research",https://pmc.ncbi.nlm.nih.gov/articles/PMC10964530/,The,PASS
+ferret research orchestration,200,31275,2,Ferrets in medical research,https://www.understandinganimalresearch.org.uk/using-animals-in-scientific-research/animal-research-species/ferret,,PASS
+ferret research orchestration,200,31275,3,Ferret contributions to the business of sensory neurobiology,https://www.sciencedirect.com/science/article/pii/S0959438824000916,The,PASS
+ferret research orchestration,200,31275,4,Ferrets as Laboratory Animals: A Bibliography,https://netvet.wustl.edu/species/FERRETS/FERRETLA.HTM,"Today,",PASS
+ferret research orchestration,200,31275,5,"Care, management, and use of ferrets in biomedical research",https://www.researchgate.net/publication/379329626_Care_management_and_use_of_ferrets_in_biomedical_research,,PASS
+ferret research orchestration,200,31275,6,Moving Forward: Recent Developments for the Ferret Biomedical Research ...,https://pmc.ncbi.nlm.nih.gov/articles/PMC6050969/,"Since the initial report in 1911, the domestic",PASS
+ferret research orchestration,200,31275,7,Moving Forward: Recent Developments for the Ferret Biomedical Research ...,https://journals.asm.org/doi/pdf/10.1128/mbio.01113-18,A variety of human pathogens are known to naturally infect,PASS
+ferret research orchestration,200,31275,8,(Pdf) the Suitability of Using the Ferret As a Model Organism in ...,https://www.researchgate.net/publication/369661507_THE_SUITABILITY_OF_USING_THE_FERRET_AS_A_MODEL_ORGANISM_IN_BIOMEDICAL_RESEARCH,This paper reviews the literature data considering the use of the,PASS
+ferret research orchestration,200,31275,9,Behavioral assessment of well-being in the naïve laboratory ferret,https://www.nature.com/articles/s41598-024-77872-y,Domestic,PASS
