@@ -8,8 +8,11 @@ class ChunkCache:
         self._cache: OrderedDict[str, list[dict]] = OrderedDict()
         self._max = max_queries
 
+    def _key(self, query: str) -> str:
+        return query.lower().strip()
+
     def put(self, query: str, chunks: list[dict]) -> None:
-        key = query.lower().strip()
+        key = self._key(query)
         if key in self._cache:
             self._cache.move_to_end(key)
         self._cache[key] = chunks
@@ -17,8 +20,8 @@ class ChunkCache:
             self._cache.popitem(last=False)
 
     def get(self, query: str, offset: int = 0, limit: int = 5) -> tuple[list[dict], int]:
-        """Return (chunks_slice, total_remaining)."""
-        key = query.lower().strip()
+        """Return (chunks_slice, total_remaining). Returns ([], 0) if not cached."""
+        key = self._key(query)
         if key not in self._cache:
             return [], 0
         self._cache.move_to_end(key)
@@ -26,6 +29,3 @@ class ChunkCache:
         sliced = all_chunks[offset:offset + limit]
         remaining = max(0, len(all_chunks) - offset - limit)
         return sliced, remaining
-
-    def has(self, query: str) -> bool:
-        return query.lower().strip() in self._cache

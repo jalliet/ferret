@@ -1,5 +1,10 @@
 import re
 
+# Split on whitespace that follows sentence-ending punctuation (.!?)
+# Uses positive lookbehind (?<=...) to match spaces after these characters
+_SENTENCE_RE = re.compile(r'(?<=[.!?])\s+')
+
+
 def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]:
     """Split text into word-count-based chunks at sentence boundaries.
 
@@ -14,7 +19,7 @@ def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]
     if not text.strip():
         return []
 
-    sentences = re.split(r'(?<=[.!?])\s+', text)
+    sentences = _SENTENCE_RE.split(text)
     if not sentences:
         return []
 

@@ -155,12 +155,17 @@ ok("cache", "offset_beyond_bounds", "returns empty, 0 remaining")
 
 cache.put("query2", [{"d": 4}])
 cache.put("query3", [{"e": 5}])
-assert not cache.has("query1") and cache.has("query2") and cache.has("query3")
+q1_chunks, _ = cache.get("query1")
+q2_chunks, _ = cache.get("query2")
+q3_chunks, _ = cache.get("query3")
+assert len(q1_chunks) == 0 and len(q2_chunks) > 0 and len(q3_chunks) > 0
 ok("cache", "lru_eviction", "oldest evicted at max_queries=2")
 
 cache2 = ChunkCache()
 cache2.put("Python Scraping", [{"f": 6}])
-assert cache2.has("python scraping") and cache2.has("  Python Scraping  ")
+lower_chunks, _ = cache2.get("python scraping")
+padded_chunks, _ = cache2.get("  Python Scraping  ")
+assert len(lower_chunks) > 0 and len(padded_chunks) > 0
 ok("cache", "case_insensitive", "normalized keys")
 
 # Unknown query

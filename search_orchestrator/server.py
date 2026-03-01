@@ -62,10 +62,9 @@ def get_more(query: str, offset: int = 0, limit: int = 5) -> dict:
         offset: Starting index into the cached chunk list.
         limit: Number of chunks to return.
     """
-    if not _cache.has(query):
-        return {"error": f"No cached results for query: '{query}'", "chunks": [], "remaining": 0}
-
     chunks, remaining = _cache.get(query, offset=offset, limit=limit)
+    if not chunks and remaining == 0:
+        return {"error": f"No cached results for query: '{query}'", "chunks": [], "remaining": 0}
     return {"chunks": chunks, "remaining": remaining, "offset": offset}
 
 
@@ -80,6 +79,6 @@ def stealth_fetch(url: str) -> dict:
         url: The URL to fetch with stealth browser.
     """
     result = stealth_fetch_one(url)
-    if result["error"]:
+    if result["error"] is not None:
         return {"error": result["error"], "url": url, "text": ""}
     return {"url": url, "text": result["text"], "char_count": len(result["text"])}
