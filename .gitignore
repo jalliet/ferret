@@ -1,5 +1,6 @@
 resources/
 .venv
-data/__pycache__
+__pycache__/
 data/notes.md
 .claude
+docs/
