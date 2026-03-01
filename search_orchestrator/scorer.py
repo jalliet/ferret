@@ -1,6 +1,8 @@
 import threading
 from sentence_transformers import CrossEncoder
 
+from search_orchestrator.types import ScoredChunk
+
 _MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 _model = None
 _model_lock = threading.Lock()
@@ -15,7 +17,7 @@ def _get_model():
     return _model
 
 
-def score_chunks(query: str, chunks: list[dict]) -> list[dict]:
+def score_chunks(query: str, chunks: list[ScoredChunk]) -> list[ScoredChunk]:
     """Score chunks by cross-encoder relevance to query.
 
     Uses MS-MARCO MiniLM-L6 cross-encoder (~80MB, CPU) for semantic
@@ -23,19 +25,19 @@ def score_chunks(query: str, chunks: list[dict]) -> list[dict]:
 
     Args:
         query: Search query string.
-        chunks: List of {"text": str, "source_url": str, "chunk_index": int}.
+        chunks: List of ScoredChunk objects.
 
     Returns:
-        Same dicts with "score" added, sorted by score descending.
+        Same chunks with score set, sorted by score descending.
     """
     if not chunks:
         return []
 
     model = _get_model()
-    pairs = [(query, c["text"]) for c in chunks]
+    pairs = [(query, c.text) for c in chunks]
     scores = model.predict(pairs)
 
     for i, chunk in enumerate(chunks):
-        chunk["score"] = round(float(scores[i]), 4)
+        chunk.score = round(float(scores[i]), 4)
 
-    return sorted(chunks, key=lambda c: c["score"], reverse=True)
+    return sorted(chunks, key=lambda c: c.score, reverse=True)

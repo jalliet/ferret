@@ -19,10 +19,10 @@ print("\nTEST: search")
 from search_orchestrator.search import search_ddg
 
 r = search_ddg("python web scraping")
-assert len(r) > 0 and all(k in r[0] for k in ("title", "url", "snippet"))
-assert all(r_item["url"].startswith("http") for r_item in r), "All URLs should be absolute"
-assert all(len(r_item["title"]) > 0 for r_item in r), "All results should have titles"
-ok("search", "ddg_search", f"{len(r)} results, first: {r[0]['title'][:50]}")
+assert len(r) > 0 and hasattr(r[0], "title") and hasattr(r[0], "url") and hasattr(r[0], "snippet")
+assert all(r_item.url.startswith("http") for r_item in r), "All URLs should be absolute"
+assert all(len(r_item.title) > 0 for r_item in r), "All results should have titles"
+ok("search", "ddg_search", f"{len(r)} results, first: {r[0].title[:50]}")
 
 # Verify num_results limit
 r5 = search_ddg("python web scraping", num_results=5)
@@ -73,15 +73,15 @@ test_urls = [
 ]
 fetched = fetch_parallel(test_urls, max_workers=3)
 assert len(fetched) == 3, "Should return result for every URL"
-assert fetched[0]["url"] == test_urls[0], "Results should preserve URL order"
-assert fetched[1]["url"] == test_urls[1], "Results should preserve URL order"
-assert fetched[2]["url"] == test_urls[2], "Results should preserve URL order"
+assert fetched[0].url == test_urls[0], "Results should preserve URL order"
+assert fetched[1].url == test_urls[1], "Results should preserve URL order"
+assert fetched[2].url == test_urls[2], "Results should preserve URL order"
 # First should succeed
-assert fetched[0]["error"] is None and len(fetched[0]["text"]) > 0
+assert fetched[0].ok and len(fetched[0].text) > 0
 # Second should fail (403)
-assert fetched[1]["error"] is not None
+assert not fetched[1].ok
 # Third should fail (DNS)
-assert fetched[2]["error"] is not None
+assert not fetched[2].ok
 ok("fetch", "fetch_parallel_mixed", f"1 success, 2 failures handled gracefully")
 
 # ── Chunker ───────────────────────────────────────────────────────────
@@ -123,17 +123,18 @@ ok("chunker", "overlap", f"{overlap_count} words shared between chunks 0 and 1")
 # ── Cross-encoder scorer ──────────────────────────────────────────────
 print("\nTEST: scorer")
 from search_orchestrator.scorer import score_chunks
+from search_orchestrator.types import ScoredChunk
 
 scored = score_chunks("python web scraping", [
-    {"text": "python web scraping tutorial with beautifulsoup requests library", "source_url": "relevant.com", "chunk_index": 0},
-    {"text": "cooking recipes for dinner tonight with fresh vegetables", "source_url": "irrelevant.com", "chunk_index": 0},
-    {"text": "web scraping python requests library http parsing html", "source_url": "also-relevant.com", "chunk_index": 0},
+    ScoredChunk(text="python web scraping tutorial with beautifulsoup requests library", source_url="relevant.com", chunk_index=0),
+    ScoredChunk(text="cooking recipes for dinner tonight with fresh vegetables", source_url="irrelevant.com", chunk_index=0),
+    ScoredChunk(text="web scraping python requests library http parsing html", source_url="also-relevant.com", chunk_index=0),
 ])
-assert len(scored) == 3 and all("score" in c for c in scored)
-assert scored[0]["score"] >= scored[1]["score"] >= scored[2]["score"]
-assert scored[-1]["source_url"] == "irrelevant.com", "Irrelevant content should rank last"
-assert scored[-1]["score"] < scored[0]["score"], "Irrelevant should score lower than relevant"
-ok("scorer", "relevance_ranking", f"{[(c['source_url'].split('.')[0], c['score']) for c in scored]}")
+assert len(scored) == 3 and all(c.score != 0 for c in scored)
+assert scored[0].score >= scored[1].score >= scored[2].score
+assert scored[-1].source_url == "irrelevant.com", "Irrelevant content should rank last"
+assert scored[-1].score < scored[0].score, "Irrelevant should score lower than relevant"
+ok("scorer", "relevance_ranking", f"{[(c.source_url.split('.')[0], c.score) for c in scored]}")
 
 assert score_chunks("query", []) == []
 ok("scorer", "empty_input", "returns []")
@@ -142,8 +143,9 @@ ok("scorer", "empty_input", "returns []")
 print("\nTEST: cache")
 from search_orchestrator.cache import ChunkCache
 
+sc = lambda t: ScoredChunk(text=t, source_url="test.com", chunk_index=0, score=1.0)
 cache = ChunkCache(max_queries=2)
-cache.put("query1", [{"a": 1}, {"b": 2}, {"c": 3}])
+cache.put("query1", [sc("a"), sc("b"), sc("c")])
 chunks_out, remaining = cache.get("query1", offset=0, limit=2)
 assert len(chunks_out) == 2 and remaining == 1
 ok("cache", "put_get", "2 returned, 1 remaining")
@@ -153,8 +155,8 @@ chunks_out, remaining = cache.get("query1", offset=10, limit=5)
 assert len(chunks_out) == 0 and remaining == 0
 ok("cache", "offset_beyond_bounds", "returns empty, 0 remaining")
 
-cache.put("query2", [{"d": 4}])
-cache.put("query3", [{"e": 5}])
+cache.put("query2", [sc("d")])
+cache.put("query3", [sc("e")])
 q1_chunks, _ = cache.get("query1")
 q2_chunks, _ = cache.get("query2")
 q3_chunks, _ = cache.get("query3")
@@ -162,7 +164,7 @@ assert len(q1_chunks) == 0 and len(q2_chunks) > 0 and len(q3_chunks) > 0
 ok("cache", "lru_eviction", "oldest evicted at max_queries=2")
 
 cache2 = ChunkCache()
-cache2.put("Python Scraping", [{"f": 6}])
+cache2.put("Python Scraping", [sc("f")])
 lower_chunks, _ = cache2.get("python scraping")
 padded_chunks, _ = cache2.get("  Python Scraping  ")
 assert len(lower_chunks) > 0 and len(padded_chunks) > 0

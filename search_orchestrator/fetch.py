@@ -5,6 +5,8 @@ from urllib.parse import urlparse
 from scrapling import Fetcher, StealthyFetcher
 from bs4 import BeautifulSoup
 
+from search_orchestrator.types import FetchResult
+
 _fetcher = Fetcher()
 _stealth_fetcher = StealthyFetcher()
 _ALLOWED_SCHEMES = frozenset({"http", "https"})
@@ -39,33 +41,33 @@ def _extract_text(html: str) -> str:
     return "\n".join(lines)
 
 
-def _do_fetch(url: str, fetcher) -> dict:
+def _do_fetch(url: str, fetcher) -> FetchResult:
     """Validate URL, fetch with given fetcher, extract text."""
     try:
         _validate_url(url)
         resp = fetcher.get(url)
         if resp.status >= 400:
-            return {"url": url, "status": resp.status, "text": "", "error": f"HTTP {resp.status}"}
+            return FetchResult(url=url, status=resp.status, text="", error=f"HTTP {resp.status}")
         text = _extract_text(resp.html_content)
         if len(text) < _MIN_TEXT_LEN:
-            return {"url": url, "status": resp.status, "text": "", "error": "empty_content"}
-        return {"url": url, "status": resp.status, "text": text, "error": None}
+            return FetchResult(url=url, status=resp.status, text="", error="empty_content")
+        return FetchResult(url=url, status=resp.status, text=text, error=None)
     except Exception as e:
-        return {"url": url, "status": 0, "text": "", "error": str(e)}
+        return FetchResult(url=url, status=0, text="", error=str(e))
 
 
-def fetch_parallel(urls: list[str], max_workers: int = 5) -> list[dict]:
-    """Fetch multiple URLs in parallel. Returns list of result dicts."""
-    results = []
+def fetch_parallel(urls: list[str], max_workers: int = 5) -> list[FetchResult]:
+    """Fetch multiple URLs in parallel."""
+    results: list[FetchResult] = []
     with ThreadPoolExecutor(max_workers=max_workers) as pool:
         futures = {pool.submit(_do_fetch, url, _fetcher): url for url in urls}
         for future in as_completed(futures):
             results.append(future.result())
     url_order = {url: i for i, url in enumerate(urls)}
-    results.sort(key=lambda r: url_order.get(r["url"], 999))
+    results.sort(key=lambda r: url_order.get(r.url, 999))
     return results
 
 
-def stealth_fetch_one(url: str) -> dict:
+def stealth_fetch_one(url: str) -> FetchResult:
     """Fetch a single URL with StealthyFetcher (Camoufox)."""
     return _do_fetch(url, _stealth_fetcher)
