@@ -1,0 +1,11 @@
+query,sources_fetched,chunks_cached,chunks_returned,failed_urls,top_score,top_url,latency_s,verdict,error
+how does transformer attention mechanism work in large language models,10,45,5,0,6.5903,https://news.engin.umich.edu/2023/12/understanding-attention-in-large-language-m,8.3,PASS,
+best practices for building MCP servers with Python,10,67,5,0,6.8563,https://ibm.github.io/mcp-context-forge/best-practices/developing-your-mcp-serve,3.8,PASS,
+comparison of web scraping libraries python 2025,10,56,5,0,8.1747,https://proxytee.com/blog/top-python-web-scraping-libraries-for-2025/,2.4,PASS,
+what causes hallucination in AI models and how to mitigate,10,43,5,0,7.0922,https://maisa.ai/ai-hallucinations/,2.8,PASS,
+rust vs go for backend systems performance comparison,10,70,5,0,8.8502,https://dasroot.net/posts/2025/12/rust-vs-go-backend-performance-use-case-compar,3.5,PASS,
+how to implement RAG retrieval augmented generation,8,54,5,0,8.6165,https://is4.ai/blog/our-blog-1/how-to-implement-rag-retrieval-augmented-generati,3.1,PASS,
+climate change impact on global food supply 2024 2025,8,90,5,0,7.5853,https://www.foodsecurityportal.org/node/3657,4.2,PASS,
+CRISPR gene editing recent breakthroughs and ethical concerns,9,150,5,0,6.5949,https://www.intechopen.com/chapters/1229353,7.1,PASS,
+zero knowledge proofs practical applications blockchain,9,124,5,0,7.5994,https://www.zeeve.io/blog/practical-use-cases-of-zero-knowledge-proofs/,5.2,PASS,
+microplastics health effects latest research findings,10,141,5,0,6.4252,https://www.derby.ac.uk/news/2026/microplastics-from-food-packaging-linked-to-li,5.8,PASS,
